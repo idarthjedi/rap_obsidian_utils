@@ -434,8 +434,8 @@ def main(filename: str, output_dir: str, dry_run: bool, verbose: bool, quiet: bo
         console.print()
         sys.exit(0)
 
-    file_path = Path(filename)
-    output_path = Path(output_dir)
+    file_path = Path(filename).expanduser()
+    output_path = Path(output_dir).expanduser()
 
     # Create output directory if it doesn't exist
     if not dry_run:
