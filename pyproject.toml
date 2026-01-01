@@ -1,0 +1,19 @@
+[project]
+name = "rap_obsidian_utils"
+version = "0.1.0"
+description = "Utilities for extracting metadata from markdown and adding Obsidian-compatible YAML front matter with wiki-links"
+requires-python = ">=3.12"
+dependencies = [
+    "click>=8.1.0",
+    "rich>=13.0.0",
+]
+
+[project.scripts]
+obsidian-frontmatter = "rap_obsidian_utils:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rap_obsidian_utils"]
