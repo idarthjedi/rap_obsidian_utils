@@ -13,9 +13,9 @@ rap_obsidian_utils is a collection of utilities for working with Obsidian markdo
 uv pip install -e .
 
 # Run the CLI utility
-uv run obsidian-frontmatter <file.md>
-uv run obsidian-frontmatter -n <file.md>  # dry run (preview only)
-uv run obsidian-frontmatter -v <file.md>  # verbose output
+uv run obsidian-frontmatter -o <output_dir> <file.md>
+uv run obsidian-frontmatter -o <output_dir> -n <file.md>  # dry run (preview only)
+uv run obsidian-frontmatter -o <output_dir> -v <file.md>  # verbose output
 ```
 
 ## Architecture

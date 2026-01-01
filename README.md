@@ -18,15 +18,17 @@ uv pip install -e .
 ## Usage
 
 ```bash
-# Process a markdown file
-uv run obsidian-frontmatter <file.md>
+# Process a markdown file (output to specified directory)
+uv run obsidian-frontmatter -o <output_dir> <file.md>
 
 # Preview changes without writing (dry run)
-uv run obsidian-frontmatter -n <file.md>
+uv run obsidian-frontmatter -o <output_dir> -n <file.md>
 
 # Verbose output with metadata table
-uv run obsidian-frontmatter -v <file.md>
+uv run obsidian-frontmatter -o <output_dir> -v <file.md>
 ```
+
+The `-o/--output-dir` parameter is required. The processed file is written to the output directory with the same filename as the input file. The output directory is created if it doesn't exist.
 
 ## Expected Input Format
 

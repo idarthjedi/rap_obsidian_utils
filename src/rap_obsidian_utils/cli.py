@@ -375,21 +375,23 @@ def display_validation_result(result: ValidationResult) -> None:
 
 @click.command()
 @click.argument('filename', type=click.Path(exists=True), required=False)
+@click.option('--output-dir', '-o', type=click.Path(), required=True,
+              help="Output directory for processed files")
 @click.option('--dry-run', '-n', is_flag=True, help="Preview changes without writing to file")
 @click.option('--verbose', '-v', is_flag=True, help="Show detailed output")
 @click.option('--quiet', '-q', is_flag=True, help="Suppress output except errors")
-def main(filename: str, dry_run: bool, verbose: bool, quiet: bool) -> None:
+def main(filename: str, output_dir: str, dry_run: bool, verbose: bool, quiet: bool) -> None:
     """
     Obsidian Front Matter Utility
 
     Extracts metadata from markdown files and adds/updates YAML front matter
-    with Obsidian-compatible wiki-links.
+    with Obsidian-compatible wiki-links. Writes output to a separate directory.
 
     \b
     USAGE:
-        obsidian-frontmatter <filename>     Process a markdown file
-        obsidian-frontmatter -n <filename>  Preview changes (dry run)
-        obsidian-frontmatter -v <filename>  Verbose output
+        obsidian-frontmatter -o <output_dir> <filename>
+        obsidian-frontmatter -o <output_dir> -n <filename>  # dry run
+        obsidian-frontmatter -o <output_dir> -v <filename>  # verbose
 
     \b
     EXPECTED MARKDOWN FORMAT:
@@ -426,13 +428,21 @@ def main(filename: str, dry_run: bool, verbose: bool, quiet: bool) -> None:
 
         # Show quick usage examples
         console.print("\n[bold]Quick Start:[/bold]")
-        console.print("  [cyan]obsidian-frontmatter[/cyan] [green]<file.md>[/green]")
-        console.print("  [cyan]obsidian-frontmatter[/cyan] [yellow]-n[/yellow] [green]<file.md>[/green]  [dim]# dry run[/dim]")
+        console.print("  [cyan]obsidian-frontmatter[/cyan] [yellow]-o <output_dir>[/yellow] [green]<file.md>[/green]")
+        console.print("  [cyan]obsidian-frontmatter[/cyan] [yellow]-o <output_dir> -n[/yellow] [green]<file.md>[/green]  [dim]# dry run[/dim]")
         console.print("  [cyan]obsidian-frontmatter[/cyan] [yellow]--help[/yellow]")
         console.print()
         sys.exit(0)
 
     file_path = Path(filename)
+    output_path = Path(output_dir)
+
+    # Create output directory if it doesn't exist
+    if not dry_run:
+        output_path.mkdir(parents=True, exist_ok=True)
+
+    # Determine output file path (same filename in output directory)
+    output_file = output_path / file_path.name
 
     if not quiet:
         console.print(f"[bold]Processing:[/bold] {file_path.name}")
@@ -472,12 +482,12 @@ def main(filename: str, dry_run: bool, verbose: bool, quiet: bool) -> None:
     # Write the file (unless dry run)
     if dry_run:
         if not quiet:
-            console.print("[yellow]Dry run - no changes written to file.[/yellow]")
+            console.print(f"[yellow]Dry run - would write to:[/yellow] {output_file}")
     else:
         try:
-            file_path.write_text(modified_content, encoding="utf-8")
+            output_file.write_text(modified_content, encoding="utf-8")
             if not quiet:
-                console.print(f"[bold green]Successfully updated:[/bold green] {file_path.name}")
+                console.print(f"[bold green]Written to:[/bold green] {output_file}")
         except Exception as e:
             error_console.print(f"[bold red]Error writing file:[/bold red] {e}")
             sys.exit(1)
