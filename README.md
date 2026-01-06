@@ -1,80 +1,74 @@
-# rap_obsidian_utils
+# RAP Obsidian Utils
 
 A CLI tool to extract metadata from markdown files and add/update YAML front matter with Obsidian-compatible wiki-links.
 
-## Installation
+---
 
-Requires Python 3.12+
+## Why RAP Obsidian Utils?
+
+When processing academic papers through RAP, the generated markdown needs proper front matter for Obsidian:
+
+- Extract title, authors, publication, and date from markdown content
+- Format as Obsidian wiki-links (`[[Author Name]]`, `[[Publication]]`)
+- Preserve existing front matter fields (like `sourcehash`)
+
+---
+
+## Quick Start
+
+**Requirements:** Python 3.12+, [UV](https://docs.astral.sh/uv/)
 
 ```bash
-# Clone the repository
-git clone git@github.com:idarthjedi/rap_obsidian_utils.git
+# Clone and install
+git clone https://github.com/idarthjedi/rap_obsidian_utils.git
 cd rap_obsidian_utils
+uv sync
 
-# Install with uv
-uv pip install -e .
+# Process a markdown file
+uv run obsidian-frontmatter -o ./output paper.md
 ```
+
+---
 
 ## Usage
 
 ```bash
-# Process a markdown file (output to specified directory)
+# Process file to output directory
 uv run obsidian-frontmatter -o <output_dir> <file.md>
 
-# Preview changes without writing (dry run)
+# Dry run (preview without writing)
 uv run obsidian-frontmatter -o <output_dir> -n <file.md>
 
-# Verbose output with metadata table
+# Verbose output
 uv run obsidian-frontmatter -o <output_dir> -v <file.md>
 ```
 
-The `-o/--output-dir` parameter is required. The processed file is written to the output directory with the same filename as the input file. The output directory is created if it doesn't exist.
-
-## Expected Input Format
-
-The tool expects markdown files with this structure:
-
-```markdown
 ---
-sourcehash: ...
+
+## Key Features
+
+- **Metadata extraction** — Title from H1, authors, publication, date
+- **Wiki-link formatting** — Obsidian-compatible `[[...]]` syntax
+- **Smart author parsing** — Splits on `,`, `;`, `&`, or `and`
+- **Date normalization** — Handles ranges, seasons, quarters
+- **Front matter preservation** — Keeps existing fields intact
+
 ---
-# Document Title
 
-**Author(s):** Author Name, Another Author
-**Publication:** Publication Name
-**Date:** March-April 2023
-```
+## Documentation
 
-## Output Format
+**Full documentation is available in the [RAP Framework Wiki](https://github.com/idarthjedi/rap_framework/wiki):**
 
-The tool adds Obsidian-compatible front matter:
+| Topic | Wiki Page |
+|-------|-----------|
+| Overview | [Obsidian Utils Overview](https://github.com/idarthjedi/rap_framework/wiki/Obsidian-Utils-Overview) |
+| Metadata Parsing | [Metadata Extraction](https://github.com/idarthjedi/rap_framework/wiki/Metadata-Extraction) |
+| Output Format | [Front Matter Format](https://github.com/idarthjedi/rap_framework/wiki/Front-Matter-Format) |
+| CLI Reference | [CLI Reference](https://github.com/idarthjedi/rap_framework/wiki/CLI-Reference) |
 
-```yaml
+**For developers:** See `CLAUDE.md` for implementation details.
+
 ---
-Title: "Document Title"
-Authors:
-  - "[[Author Name]]"
-  - "[[Another Author]]"
-Book: "[[Publication Name]]"
-Date: "March-April 2023"
-sourcehash: ...
----
-```
-
-## Features
-
-- Extracts title from H1 heading
-- Parses multiple authors (splits on `,`, `;`, `&`, or `and`)
-- Formats authors and publication as Obsidian wiki-links (`[[...]]`)
-- Normalizes date formats (month ranges, seasons, quarters, various formats)
-- Preserves existing front matter fields
-- Validates output before writing
-- Rich terminal output with syntax highlighting
-
-## Dependencies
-
-- [click](https://click.palletsprojects.com/) - CLI framework
-- [rich](https://rich.readthedocs.io/) - Terminal formatting
 
 ## License
 
