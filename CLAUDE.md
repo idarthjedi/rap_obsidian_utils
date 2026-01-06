@@ -6,6 +6,38 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 rap_obsidian_utils is a collection of utilities for working with Obsidian markdown files. The primary tool extracts metadata from markdown content and adds/updates YAML front matter with Obsidian-compatible wiki-links (`[[...]]` format).
 
+## Documentation
+
+### Wiki (User-Facing Documentation)
+
+The RAP Framework Wiki contains user-facing documentation for this project:
+- **Location:** `~/development/anthropics/projects/rap_framework.wiki/`
+- **URL:** https://github.com/idarthjedi/rap_framework/wiki
+
+**When to update the wiki:**
+- Adding or changing CLI options
+- Modifying metadata extraction rules
+- Changing front matter output format
+- Adding new field types or wiki-link formats
+- Updating installation procedures
+
+**Wiki pages for this project:**
+
+| Change Type | Wiki Page(s) to Update |
+|-------------|------------------------|
+| CLI options | `CLI-Reference.md` |
+| Installation/setup | `Installation.md` |
+| Metadata parsing | `Metadata-Extraction.md`, `Obsidian-Utils-Overview.md` |
+| Front matter format | `Front-Matter-Format.md`, `Configuration.md` |
+| Architecture changes | `System-Overview.md`, `Data-Flow.md` |
+
+### Documentation Map
+
+| Topic | Location | Audience |
+|-------|----------|----------|
+| User guide, CLI reference | [RAP Framework Wiki](https://github.com/idarthjedi/rap_framework/wiki) | Users |
+| Implementation details | This file (`CLAUDE.md`) | Developers |
+
 ## Commands
 
 ```bash
