@@ -13,9 +13,14 @@ from rap_obsidian_utils.cli import (
     normalize_date,
 )
 
+from rap_obsidian_utils.sync import (
+    sync_main,
+)
+
 __version__ = "0.1.0"
 
 __all__ = [
+    # Frontmatter utility
     "main",
     "MarkdownMetadata",
     "ValidationResult",
@@ -24,4 +29,6 @@ __all__ = [
     "validate_frontmatter",
     "clean_to_ascii",
     "normalize_date",
+    # Sync utility
+    "sync_main",
 ]

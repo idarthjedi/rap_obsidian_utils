@@ -10,6 +10,7 @@ dependencies = [
 
 [project.scripts]
 obsidian-frontmatter = "rap_obsidian_utils:main"
+obsidian-sync = "rap_obsidian_utils:sync_main"
 
 [build-system]
 requires = ["hatchling"]
